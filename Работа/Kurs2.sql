@@ -9,14 +9,14 @@ CREATE TABLE dbo.Goods
    CHECK(Quantity>=0)
 );
 /*INSERT INTO dbo.Goods(ID_good, Name, Quantity) VALUES
-                     (1, 'Ìîäóëü ÎÇÓ ñòàíäàðòíûé', 7512),
-					 (2, 'GeForce 6600GT(NV 43)', 1511),
-					 (3, 'Cirrus Logic CS4382', 2171),
-					 (4, 'ÆÊ-äèñïëåé AH-IPS', 1793),
-					 (1118, 'HAKKO 900S', 27),
-					 (1157, 'Êëåé Ãèðëåí-Ó', 40),
-					 (2108, 'LG 43UH619V', 1567),
-					 (2109, 'DEGEN DE-1123', 897);*/
+                     (1, 'ÐœÐ¾Ð´ÑƒÐ»ÑŒ ÐžÐ—Ð£ ÑÑ‚Ð°Ð½Ð´Ð°Ñ€Ñ‚Ð½Ñ‹Ð¹', 7512),
+		     (2, 'GeForce 6600GT(NV 43)', 1511),
+		     (3, 'Cirrus Logic CS4382', 2171),
+		     (4, 'Ð–Ðš-Ð´Ð¸ÑÐ¿Ð»ÐµÐ¹ AH-IPS', 1793),
+		     (1118, 'HAKKO 900S', 27),
+		     (1157, 'ÐšÐ»ÐµÐ¹ Ð“Ð¸Ñ€Ð»ÐµÐ½-Ð£', 40),
+		     (2108, 'LG 43UH619V', 1567),
+		     (2109, 'DEGEN DE-1123', 897);*/
 IF OBJECT_ID('dbo.Type_of_Good', 'U') IS NOT NULL
    DROP TABLE dbo.Type_of_Good;
 CREATE TABLE dbo.Type_of_Good
@@ -26,13 +26,13 @@ CREATE TABLE dbo.Type_of_Good
    Type_of_good NVARCHAR(255) NOT NULL
 );
 /*INSERT INTO dbo.Type_of_Good(Number, ID_good, Type_of_good) VALUES
-                            (1, 3, 'Êîìïëåêòóþùåå'),
-							(2, 2, 'Êîìïëåêòóþùåå'),
-							(3, 4, 'Êîìïëåêòóþùåå'),
-							(11, 2108, 'Òîâàð'),
-							(13, 2109, 'Òîâàð'),
-							(27, 1118, 'Îáîðóäîâàíèå'),
-							(33, 1157, 'Îáîðóäîâàíèå');*/
+                            (1, 3, 'ÐšÐ¾Ð¼Ð¿Ð»ÐµÐºÑ‚ÑƒÑŽÑ‰ÐµÐµ'),
+			    (2, 2, 'ÐšÐ¾Ð¼Ð¿Ð»ÐµÐºÑ‚ÑƒÑŽÑ‰ÐµÐµ'),
+			    (3, 4, 'ÐšÐ¾Ð¼Ð¿Ð»ÐµÐºÑ‚ÑƒÑŽÑ‰ÐµÐµ'),
+			    (11, 2108, 'Ð¢Ð¾Ð²Ð°Ñ€'),
+			    (13, 2109, 'Ð¢Ð¾Ð²Ð°Ñ€'),
+			    (27, 1118, 'ÐžÐ±Ð¾Ñ€ÑƒÐ´Ð¾Ð²Ð°Ð½Ð¸Ðµ'),
+			    (33, 1157, 'ÐžÐ±Ð¾Ñ€ÑƒÐ´Ð¾Ð²Ð°Ð½Ð¸Ðµ');*/
 IF OBJECT_ID('dbo.Persons', 'U') IS NOT NULL
    DROP TABLE dbo.Persons;
 CREATE TABLE dbo.Persons
@@ -44,10 +44,10 @@ CREATE TABLE dbo.Persons
    E_mail NVARCHAR(255) NULL 
 );
 /*INSERT INTO dbo.Persons(ID_person, Name, Adres, Telephone, E_mail) VALUES
-                            (1, 'LG Electronics', 'Ñåóë', '8-800-200-7676', 'lg@gmail.com'),
-							(2, 'Hakko', 'Òîêèî', '8-800-111-7070', 'hakko@hakkorus.ru'),
-							(3, 'Ì.Âèäåî', 'Ìîñêâà', '8(495)777-777-5', '24@mvideo.ru'),
-							(4, 'Òåõíîñèëà', 'Ìîñêâà', '+7(495)640-94-74', 'zakupki@technosila.ru');*/
+                       (1, 'LG Electronics', 'Ð¡ÐµÑƒÐ»', '8-800-200-7676', 'lg@gmail.com'),
+		       (2, 'Hakko', 'Ð¢Ð¾ÐºÐ¸Ð¾', '8-800-111-7070', 'hakko@hakkorus.ru'),
+		       (3, 'Ðœ.Ð’Ð¸Ð´ÐµÐ¾', 'ÐœÐ¾ÑÐºÐ²Ð°', '8(495)777-777-5', '24@mvideo.ru'),
+		       (4, 'Ð¢ÐµÑ…Ð½Ð¾ÑÐ¸Ð»Ð°', 'ÐœÐ¾ÑÐºÐ²Ð°', '+7(495)640-94-74', 'zakupki@technosila.ru');*/
 IF OBJECT_ID('dbo.Type_of_Person', 'U') IS NOT NULL
    DROP TABLE dbo.Type_of_Person;
 CREATE TABLE dbo.Type_of_Person
@@ -57,10 +57,10 @@ CREATE TABLE dbo.Type_of_Person
    Type_of_person NVARCHAR(255) NOT NULL
 );
 /*INSERT INTO dbo.Type_of_Person(Number, ID_person, Type_of_person) VALUES
-                            (1, 1, 'ÎÀÎ'),
-							(2, 4, 'ÎÎÎ'),
-							(3, 2, 'ÎÀÎ'),
-							(4, 3, 'ÎÎÎ');*/
+                              (1, 1, 'ÐžÐÐž'),
+			      (2, 4, 'ÐžÐžÐž'),
+			      (3, 2, 'ÐžÐÐž'),
+			      (4, 3, 'ÐžÐžÐž');*/
 IF OBJECT_ID('dbo.Orders', 'U') IS NOT NULL
    DROP TABLE dbo.Orders;
 CREATE TABLE dbo.Orders
@@ -74,8 +74,8 @@ CREATE TABLE dbo.Orders
 );
 /*INSERT INTO dbo.Orders(ID_order, ID_cust, Price, Price_of_del, Date_of_sh) VALUES
                       (257, 3, 390000.00, 50000.00, '20160909'),
-					  (258, 4, 560000.00, 45000.00, '20160911'),
-					  (361, 2, 440000.00, 35000.00, '20161130');*/
+		      (258, 4, 560000.00, 45000.00, '20160911'),
+		      (361, 2, 440000.00, 35000.00, '20161130');*/
 IF OBJECT_ID('dbo.OrderDetails', 'U') IS NOT NULL
    DROP TABLE dbo.OrderDetails;
 CREATE TABLE dbo.OrderDetails
@@ -88,11 +88,11 @@ CREATE TABLE dbo.OrderDetails
    CHECK(Quantity>=0)
 );
 /*INSERT INTO dbo.OrderDetails(Number, ID_order, ID_good, Quantity, Unit) VALUES
-                            (309, 257, 2108, 50, 'øò.'),
-							(310, 257, 2109, 30, 'øò.'),
-							(311, 258, 2109, 40, 'øò.'),
-							(312, 258, 2108, 15, 'øò.'),
-							(562, 361, 2109, 10, 'øò.');*/
+                            (309, 257, 2108, 50, 'ÑˆÑ‚.'),
+			    (310, 257, 2109, 30, 'ÑˆÑ‚.'),
+			    (311, 258, 2109, 40, 'ÑˆÑ‚.'),
+			    (312, 258, 2108, 15, 'ÑˆÑ‚.'),
+			    (562, 361, 2109, 10, 'ÑˆÑ‚.');*/
 IF OBJECT_ID('dbo.Supplies', 'U') IS NOT NULL
    DROP TABLE dbo.Supplies;
 CREATE TABLE dbo.Supplies
@@ -104,10 +104,10 @@ CREATE TABLE dbo.Supplies
    Date_of_arr DATE NULL,
    CHECK((Cost>=0)AND(Cost_of_sup>=0))
 );
-INSERT INTO dbo.Supplies(ID_sup, ID_prov, Cost, Cost_of_sup, Date_of_arr) VALUES
+/*INSERT INTO dbo.Supplies(ID_sup, ID_prov, Cost, Cost_of_sup, Date_of_arr) VALUES
                         (267, 1, 120000.00, 15000.00, '20160915'),
-						(268, 2, 60000.00, 7000.00, '20160917'),
-						(374, 1, 270000.00, 25000.00, '20161130');
+			(268, 2, 60000.00, 7000.00, '20160917'),
+			(374, 1, 270000.00, 25000.00, '20161130');*/
 IF OBJECT_ID('dbo.SupplyDetails', 'U') IS NOT NULL
    DROP TABLE dbo.SupplyDetails;
 CREATE TABLE dbo.SupplyDetails
@@ -121,8 +121,8 @@ CREATE TABLE dbo.SupplyDetails
    CHECK((Quantity>=0)AND(Quan_kept>=0))
 );
 /*INSERT INTO dbo.SupplyDetails(Number, ID_sup, ID_good, Quantity, Unit, Quan_kept) VALUES
-                        (332, 267, 1, 700, 'øò.', 567),
-						(333, 267, 3, 800, 'øò.', 677),
-						(334, 268, 1118, 20, 'øò.', 20),
-						(408, 374, 2, 650, 'øò.', 540),
-						(409, 374, 4, 170, 'øò.', 110);*/
+                             (332, 267, 1, 700, 'ÑˆÑ‚.', 567),
+			     (333, 267, 3, 800, 'ÑˆÑ‚.', 677),
+			     (334, 268, 1118, 20, 'ÑˆÑ‚.', 20),
+			     (408, 374, 2, 650, 'ÑˆÑ‚.', 540),
+			     (409, 374, 4, 170, 'ÑˆÑ‚.', 110);*/
