@@ -110,7 +110,7 @@ CREATE PROC DeleteDefOrder
 )
 AS
   BEGIN TRAN;
-	 DELETE FROM Orders WHERE ID_order=@id;
+	 DELETE FROM Orders WHERE ID_order=@id AND Date_of_sh>=CAST(GETDATE() AS DATE);
 	 IF(@@ERROR=0) COMMIT TRAN;
 	 ELSE
 	 ROLLBACK TRAN;
@@ -121,7 +121,7 @@ CREATE PROC DeleteDefSupply
 )
 AS
   BEGIN TRAN
-     DELETE FROM Supplies WHERE ID_sup=@id;
+     DELETE FROM Supplies WHERE ID_sup=@id AND Date_of_arr>=CAST(GETDATE() AS DATE);
 	 IF(@@ERROR=0) COMMIT TRAN;
 	 ELSE
 	 ROLLBACK TRAN;
@@ -148,20 +148,66 @@ AS
 	 ELSE
 	 ROLLBACK TRAN;
 	 GO
+
+CREATE PROC ShowSupplies
+AS
+  BEGIN
+  SELECT * FROM Supplies;
+  END;
+  GO
+
+CREATE PROC ShowOrders
+AS
+  BEGIN
+  SELECT * FROM Orders;
+  END;
+  GO
+
 CREATE TRIGGER trg_Order_delete_details ON dbo.Orders AFTER DELETE
 AS
-DECLARE @quan AS INT
-@quan=(SELECT Quantity FROM OrderDetails WHERE ID_order IN (SELECT ID_order FROM deleted))
+SET NOCOUNT ON;
+DECLARE @cur_id AS INT, @quan AS INT
+DECLARE OrderQuan CURSOR FOR SELECT ID_good,Quantity FROM OrderDetails WHERE ID_order IN (SELECT ID_order FROM deleted) FOR READ ONLY;
+OPEN OrderQuan;
+FETCH NEXT FROM OrderQuan INTO @cur_id, @quan;
+WHILE @@FETCH_STATUS=0
+BEGIN
+  UPDATE dbo.Goods 
+  SET Quantity=Quantity+@quan WHERE Goods.ID_good=@cur_id;
+  FETCH NEXT FROM OrderQuan INTO @cur_id, @quan;
+END;
+CLOSE OrderQuan;
+DEALLOCATE OrderQuan;
+--@quan=(SELECT Quantity FROM OrderDetails WHERE ID_order IN (SELECT ID_order FROM deleted))
 DELETE FROM OrderDetails WHERE ID_order IN (SELECT ID_order FROM deleted);
-UPDATE dbo.Goods 
-SET Quantity=Quantity+@quan WHERE Goods.ID_good=OrderDetails.ID_good;
 go
 
-
-
-CREATE TRIGGER trg_SupplyDetails_insert_quantity ON dbo.SupplyDetails AFTER INSERT
+CREATE TRIGGER trg_Supply_delete_details ON dbo.Supplies AFTER DELETE
 AS
 SET NOCOUNT ON;
-UPDATE dbo.Goods 
-SET Quantity=Quantity+@quan WHERE Goods.ID_good=SupplyDetails.ID_good;*/
+DECLARE @cur_id AS INT, @quan AS INT
+DECLARE SupplyQuan CURSOR FOR SELECT ID_good,Quantity FROM SupplyDetails WHERE ID_sup IN (SELECT ID_sup FROM deleted) FOR READ ONLY;
+OPEN SupplyQuan;
+FETCH NEXT FROM SupplyQuan INTO @cur_id, @quan;
+WHILE @@FETCH_STATUS=0
+BEGIN
+  UPDATE dbo.Goods 
+  SET Quantity=Quantity+@quan WHERE Goods.ID_good=@cur_id;
+  FETCH NEXT FROM SupplyQuan INTO @cur_id, @quan;
+END;
+CLOSE SupplyQuan;
+DEALLOCATE SupplyQuan;
+DELETE FROM SupplyDetails WHERE ID_sup IN (SELECT ID_sup FROM deleted);
+go
+
+CREATE TRIGGER trg_Person_delete_type ON dbo.Persons AFTER DELETE
+AS
+SET NOCOUNT ON;
+DELETE FROM Type_of_Person WHERE ID_person IN (SELECT ID_person FROM deleted);
+go
+
+CREATE TRIGGER trg_Good_delete_type ON dbo.Goods AFTER DELETE
+AS
+SET NOCOUNT ON;
+DELETE FROM Type_of_Good WHERE ID_good IN (SELECT ID_good FROM deleted);
 go
