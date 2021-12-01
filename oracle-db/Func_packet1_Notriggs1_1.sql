@@ -1,31 +1,3 @@
-/*CREATE OR REPLACE PROCEDURE DeleteLastOrder
-IS
-  cur_id INT; quan INT; dt DATE;
-  CURSOR OrderQuan 
-  IS
-  SELECT ID_good,Quantity FROM OrderDetails WHERE ID_order = (SELECT MAX(ID_order) FROM Orders);
-  ord_quan OrderQuan%ROWTYPE;
-BEGIN
-   SELECT Date_of_sh INTO dt FROM Orders WHERE ID_order = (SELECT MAX(ID_order) FROM Orders);
-   IF(dt >= (SYSDATE - 1))
-   THEN
-     OPEN OrderQuan;
-     FETCH OrderQuan INTO ord_quan;
-     cur_id := ord_quan.ID_good;
-     quan := ord_quan.Quantity;
-     WHILE OrderQuan%FOUND
-     LOOP
-       UPDATE Goods 
-         SET Quantity = Quantity + quan WHERE Goods.ID_good = cur_id;
-       FETCH OrderQuan INTO ord_quan;
-       cur_id := ord_quan.ID_good;
-       quan := ord_quan.Quantity;
-     END LOOP;
-     CLOSE OrderQuan;
-     DELETE FROM Orders WHERE ID_order = (SELECT MAX(ID_order) FROM Orders);
-   END IF;
-END DeleteLastOrder;*/
-
 CREATE OR REPLACE PROCEDURE DeleteLastSupply
 IS
   cur_id INT; quan INT; dt DATE;
