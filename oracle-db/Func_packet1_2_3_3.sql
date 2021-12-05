@@ -1,24 +1,3 @@
-/*CREATE OR REPLACE FUNCTION ShowGoods
-RETURN Goods_t
-IS
-  tovars Goods_t;
-BEGIN
-  tovars := Goods_t();
-  SELECT(CAST(MULTISET (SELECT * FROM Goods) AS Goods_t)) INTO tovars FROM DUAL;
-  RETURN tovars;
-END;*/
-
-/*CREATE OR REPLACE FUNCTION ShowOrderForSTime
-(date1 IN DATE, date2 IN DATE)
-RETURN Order_t
-IS
-  ord Order_t;
-BEGIN
-  ord := Order_t();
-  SELECT (CAST(MULTISET (SELECT * FROM Orders WHERE ((Date_of_sh >= date1) AND (Date_of_sh <= date2))) AS Order_t)) INTO ord FROM DUAL;
-  RETURN ord;
-END ShowOrderForSTime;*/
-
 CREATE OR REPLACE FUNCTION ShowListGood
 RETURN Goods_t1
 IS
