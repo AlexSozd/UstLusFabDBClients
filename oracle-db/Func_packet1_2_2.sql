@@ -2,7 +2,7 @@
 (id_ord1 IN INT, id_cust1 IN INT, pr1 IN NUMBER, pr_del1 IN NUMBER, data_of_sh1 IN DATE)
 IS
 BEGIN
-	 INSERT INTO Orders(ID_order, ID_cust, Price, Price_of_del, Date_of_sh) VALUES
+   INSERT INTO Orders(ID_order, ID_cust, Price, Price_of_del, Date_of_sh) VALUES
 	 (id_ord1, id_cust1, pr1, pr_del1, data_of_sh1);
 END InsertOrder;
 
@@ -18,9 +18,9 @@ CREATE OR REPLACE PROCEDURE InsertOrderDetail
 (id_ordet1 IN INT, id_ord1 IN INT, id_g1 IN INT, quan1 IN INT, un1 IN NVARCHAR2)
 IS
 BEGIN
-	 INSERT INTO OrderDetails(ID_ordet, ID_order, ID_good, Quantity, Unit) VALUES
+   INSERT INTO OrderDetails(ID_ordet, ID_order, ID_good, Quantity, Unit) VALUES
 	 (id_ordet1, id_ord1, id_g1, quan1, un1);
-	 UPDATE Goods 
+     UPDATE Goods 
      SET Quantity = Quantity - quan1 WHERE Goods.ID_good = id_g1;
 END InsertOrderDetail;
 
@@ -30,14 +30,14 @@ IS
 BEGIN
    INSERT INTO SupplyDetails(ID_sudet, ID_sup, ID_good, Quantity, Unit, Quan_kept) VALUES
 	 (id_sudet1, id_sup1, id_g1, quan1, un1, quan_kpt1);
-	 UPDATE Goods 
+     UPDATE Goods 
      SET Quantity = Quantity + quan1 WHERE Goods.ID_good = id_g1;
 END InsertSupplyDetail;*/
 
 /*CREATE OR REPLACE PROCEDURE DeleteLastOrder
 IS
 BEGIN
-	 DELETE FROM Orders WHERE ID_order = (SELECT MAX(ID_order) FROM Orders);
+  DELETE FROM Orders WHERE ID_order = (SELECT MAX(ID_order) FROM Orders);
 END DeleteLastOrder;*/
 
 CREATE OR REPLACE FUNCTION ShowGoods
@@ -144,7 +144,7 @@ END;
 (id_per1 IN INT, tit1 IN NVARCHAR2, fio1 IN NVARCHAR2, id_fir1 IN INT, adr1 IN NVARCHAR2, tel1 IN NVARCHAR2, e_m1 IN NVARCHAR2)
 IS
 BEGIN
-	 INSERT INTO Persons(ID_person, Title, FIO, ID_firm, Adres, Telephone, E_mail) VALUES
+   INSERT INTO Persons(ID_person, Title, FIO, ID_firm, Adres, Telephone, E_mail) VALUES
 	 (id_per1, tit1, fio1, id_fir1, adr1, tel1, e_m1);
 END InsertPerson;
 
@@ -152,7 +152,7 @@ CREATE OR REPLACE PROCEDURE InsertFirm
 (id_fir1 IN INT, app1 IN NVARCHAR2, id_t1 IN NVARCHAR2)
 IS
 BEGIN
-	 INSERT INTO Firms(ID_firm, Appel, Type_of_firm) VALUES
+   INSERT INTO Firms(ID_firm, Appel, Type_of_firm) VALUES
 	 (id_fir1, app1, id_t1);
 END InsertFirm;
 
@@ -170,8 +170,8 @@ IS
 BEGIN
    INSERT INTO Type_of_Good(ID_type, ID_good, Type_of_good) VALUES
 	 (id_t1, id_g1, t1);
-END InsertTypeGood;
-*/
+END InsertTypeGood;*/
+
 CREATE OR REPLACE FUNCTION Get_num_Person
 RETURN INT
 IS
@@ -203,7 +203,7 @@ END Get_num_TypeGood;
 (id_ord IN INT)
 IS  
 BEGIN
-	 DELETE FROM Orders WHERE ID_order = id_ord AND Date_of_sh >= CAST(GETDATE()-1 AS DATE);
+  DELETE FROM Orders WHERE ID_order = id_ord AND Date_of_sh >= CAST(GETDATE()-1 AS DATE);
 END DeleteDefOrder;
 
 CREATE OR REPLACE PROCEDURE DeleteDefSupply
@@ -211,7 +211,7 @@ CREATE OR REPLACE PROCEDURE DeleteDefSupply
 IS
   
 BEGIN
-   DELETE FROM Supplies WHERE ID_sup = id_s AND Date_of_arr >= CAST(GETDATE()-1 AS DATE);
+  DELETE FROM Supplies WHERE ID_sup = id_s AND Date_of_arr >= CAST(GETDATE()-1 AS DATE);
 END DeleteDefSupply;*/
 
 CREATE OR REPLACE PROCEDURE DeletePerson
@@ -219,7 +219,7 @@ CREATE OR REPLACE PROCEDURE DeletePerson
 IS
   
 BEGIN
-	 DELETE FROM Persons WHERE ID_person = id_per;
+  DELETE FROM Persons WHERE ID_person = id_per;
 END DeletePerson;
 
 CREATE OR REPLACE PROCEDURE DeleteFirm
@@ -227,7 +227,7 @@ CREATE OR REPLACE PROCEDURE DeleteFirm
 IS
   
 BEGIN
-	 DELETE FROM Firms WHERE ID_firm = id_fir;
+  DELETE FROM Firms WHERE ID_firm = id_fir;
 END DeleteFirm;
 
 /*CREATE OR REPLACE PROCEDURE DeleteGood
@@ -235,9 +235,9 @@ END DeleteFirm;
 IS
   
 BEGIN
-	 DELETE FROM Goods WHERE ID_good = id_g;
-END DeleteGood;
-*/
+  DELETE FROM Goods WHERE ID_good = id_g;
+END DeleteGood;*/
+
 CREATE OR REPLACE FUNCTION ShowSupplies
 RETURN Supplies%ROWTYPE
 IS
@@ -259,7 +259,7 @@ CREATE OR REPLACE FUNCTION ShowContacts
 RETURN Persons%ROWTYPE
 IS
 BEGIN
-   SELECT * FROM Persons WHERE ID_firm = id_fir;
+  SELECT * FROM Persons WHERE ID_firm = id_fir;
 END ShowContacts;
 
 /*CREATE OR REPLACE TRIGGER trg_Order_delete_details 
@@ -268,11 +268,11 @@ FOR EACH ROW
 DECLARE 
   cur_id INT; quan INT;
   
-   CURSOR OrderQuan 
-   IS
-   SELECT ID_good,Quantity FROM OrderDetails WHERE ID_order IN (SELECT ID_order FROM deleted);
+  CURSOR OrderQuan 
+  IS
+  SELECT ID_good,Quantity FROM OrderDetails WHERE ID_order IN (SELECT ID_order FROM deleted);
    
-   ord_quan OrderQuan%ROWTYPE;
+  ord_quan OrderQuan%ROWTYPE;
   
 BEGIN
   OPEN OrderQuan;
@@ -375,61 +375,3 @@ BEGIN
    ROLLBACK;
    END IF;
 END DelPer;*/
-
-/*PROCEDURE check_fio(FIO IN NVARCHAR2)
-IS
-BEGIN
-   IF(REGEXP_COUNT(FIO,'[0-9]') > 0)
-   THEN
-      RAISE_APPLICATION_ERROR(-20006, 'FIO can not include number.');
-   END IF;
-   IF(REGEXP_LIKE(FIO,'(.*?\s){1,2}(.*?)') = FALSE)
-   THEN
-      RAISE_APPLICATION_ERROR(-20007, 'FIO can not include this count of words.');
-   END IF;
-END check_fio;
-
-PROCEDURE check_fid(FirID1 IN INTEGER)
-IS
-BEGIN
-   IF (FirID1 NOT IN Firms.ID_firm)
-   THEN
-      RAISE_APPLICATION_ERROR(-20017, 'Firm with this id does not exist.');
-   END IF;
-END check_fid;
-
-PROCEDURE check_em(e_mail IN NVARCHAR2)
-IS
-BEGIN
-   IF (REGEXP_LIKE(e_mail,'^(([a-z A-Z 0-9]+)@(gmail.com|yandex.ru|mail.ru))$') = FALSE)
-   THEN
-      RAISE_APPLICATION_ERROR(-20009, 'Entered email is incorrect.');
-   END IF;
-END check_em;
-
-PROCEDURE check_tel(Tel IN NVARCHAR2)
-IS
-BEGIN
-   IF (REGEXP_LIKE(Tel,'\d{1}\(?\d{3}\)?[[:space]\.\-]?\d{3}[[:space]\.\-]?\d{2}[[:space]\.\-]?\d{2}') = FALSE)
-   THEN
-      RAISE_APPLICATION_ERROR(-20020, 'Entered telephone number is incorrect.');
-   END IF;
-END check_tel;
-
-PROCEDURE check_date(Date1 IN DATE)
-IS
-BEGIN
-   IF (Date1 <= (SYSDATE - 1))
-   THEN
-      RAISE_APPLICATION_ERROR(-20019, 'Procedures with goods that have time more than a day before, can not be deleted or inserted.');
-   END IF;
-END check_date;
-
-PROCEDURE check_tit(Title IN NVARCHAR2)
-IS
-BEGIN
-   IF(REGEXP_COUNT(Title,'([0-9]|1[0-4])') > 1)
-   THEN
-      RAISE_APPLICATION_ERROR(-20013, 'Title can not include more than one number.');
-   END IF;
-END check_tit;
