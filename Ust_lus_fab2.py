@@ -1,6 +1,7 @@
 import sys
 import math
 import pyodbc
+
 def main():
     key=7
     while  key != 6:
@@ -32,7 +33,8 @@ def main():
     #print("Нажмите любую клавишу для закрытия")
     #raw_input()
 
-def  Insert_Order():
+
+def Insert_Order():
 
     id_cust=int(input("Введите код заказчика \n"))
     pr=input("Введите стоимость заказа \n")
@@ -72,7 +74,7 @@ def  Insert_Order():
             break
 
 
-def  Insert_Supply():
+def Insert_Supply():
 
     id_prov=int(input("Введите код поставщика \n"))
     c=input("Введите стоимость поставки \n")
@@ -112,7 +114,7 @@ def  Insert_Supply():
             break
 
 
-def  Insert_Person():
+def Insert_Person():
 
      name=input("Введите имя/название нового партнёра \n")
      adres=input("Введите адрес \n")
@@ -144,7 +146,7 @@ def  Insert_Person():
              break
 
 
-def  Insert_Good():
+def Insert_Good():
 
     name = input("Введите название нового товара \n")
     quan = int(input("Введите количество товара \n"))
@@ -172,7 +174,7 @@ def  Insert_Good():
             con.close()
             break
 
-def  View_dataBase():
+def View_dataBase():
 
     key = 7
     while key != 6:
@@ -258,7 +260,7 @@ def  View_dataBase():
             cur.close()
             con.close()
 
-def  SpecialFunctions():
+def SpecialFunctions():
 
     key=7
     while  key != 6:
