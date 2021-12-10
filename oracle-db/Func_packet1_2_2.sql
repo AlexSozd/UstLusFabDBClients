@@ -20,7 +20,7 @@ IS
 BEGIN
    INSERT INTO OrderDetails(ID_ordet, ID_order, ID_good, Quantity, Unit) VALUES
 	 (id_ordet1, id_ord1, id_g1, quan1, un1);
-     UPDATE Goods 
+   UPDATE Goods 
      SET Quantity = Quantity - quan1 WHERE Goods.ID_good = id_g1;
 END InsertOrderDetail;
 
@@ -30,7 +30,7 @@ IS
 BEGIN
    INSERT INTO SupplyDetails(ID_sudet, ID_sup, ID_good, Quantity, Unit, Quan_kept) VALUES
 	 (id_sudet1, id_sup1, id_g1, quan1, un1, quan_kpt1);
-     UPDATE Goods 
+   UPDATE Goods 
      SET Quantity = Quantity + quan1 WHERE Goods.ID_good = id_g1;
 END InsertSupplyDetail;*/
 
@@ -282,7 +282,7 @@ BEGIN
   WHILE SQL@@FETCH_STATUS = 0
   LOOP
     UPDATE Goods 
-    SET Quantity = Quantity + quan WHERE Goods.ID_good = cur_id;
+      SET Quantity = Quantity + quan WHERE Goods.ID_good = cur_id;
     FETCH OrderQuan INTO ord_quan;
     cur_id := ord_quan.ID_good;
     quan := ord_quan.Quantity;
@@ -311,7 +311,7 @@ BEGIN
   WHILE SQL@@FETCH_STATUS = 0
   LOOP
     UPDATE Goods 
-    SET Quantity = Quantity + quan WHERE Goods.ID_good = cur_id;
+      SET Quantity = Quantity + quan WHERE Goods.ID_good = cur_id;
     FETCH SupplyQuan INTO sup_quan;
     cur_id := sup_quan.ID_good;
     quan := sup_quan.Quantity;
@@ -329,7 +329,7 @@ BEGIN
    
    IF INSERTING
    THEN
-   SELECT MAX(ID_person) INTO :NEW.ID_person FROM Persons;
+      SELECT MAX(ID_person) INTO :NEW.ID_person FROM Persons;
    END IF;
    check_tit(:NEW.Title);
    check_fio(:NEW.FIO);
@@ -372,6 +372,6 @@ BEGIN
    SELECT COUNT(*) INTO kol FROM Persons;
    IF(kol = 0)
    THEN
-   ROLLBACK;
+      ROLLBACK;
    END IF;
 END DelPer;*/
