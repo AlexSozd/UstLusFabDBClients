@@ -146,7 +146,7 @@ def main():
     #raw_input()
     return 0
 
-def  Insert_Order(cat1):
+def Insert_Order(cat1):
 
     id_cust=int(input("Введите код заказчика \n"))
     pr=input("Введите стоимость заказа \n")
@@ -155,45 +155,45 @@ def  Insert_Order(cat1):
     
     if cat1 == '1':
 
-            con = cx_Oracle.connect('SYSTEM/Sys17917@localhost/orcl')
-            cur = con.cursor()
-            #row = cur.execute("exec Get_num_Order").fetchone()
-            id_ord1=cur.var(cx_Oracle.NUMBER)
-            args=[id_ord1]
-            row=cur.callproc("Get_num_Order_1", args)
-            id_ord=id_ord1.getvalue()
-            #id_ord = int(row[0])
-            #cur.execute("exec InsertOrder @id_ord1 = ?,@id_cust1 = ?,@pr1 = ?,@pr_del1 = ?,@date_of_sh1 = ?", id_ord, id_cust, pr, pr_del, data_of_sh)
-            args=[id_ord, id_cust, pr, pr_del, data_of_sh]
-            row=cur.callproc("InsertOrder", args)
+        con = cx_Oracle.connect('SYSTEM/Sys17917@localhost/orcl')
+        cur = con.cursor()
+        #row = cur.execute("exec Get_num_Order").fetchone()
+        id_ord1=cur.var(cx_Oracle.NUMBER)
+        args=[id_ord1]
+        row=cur.callproc("Get_num_Order_1", args)
+        id_ord=id_ord1.getvalue()
+        #id_ord = int(row[0])
+        #cur.execute("exec InsertOrder @id_ord1 = ?,@id_cust1 = ?,@pr1 = ?,@pr_del1 = ?,@date_of_sh1 = ?", id_ord, id_cust, pr, pr_del, data_of_sh)
+        args=[id_ord, id_cust, pr, pr_del, data_of_sh]
+        row=cur.callproc("InsertOrder", args)
+        cur.commit()
+        count_good = int(input("Введите число типов товара \n"))
+        i = 0
+        while i < count_good:
+
+            #row = cur.execute("exec Get_num_OrderDetail").fetchone()
+            num_det1=cur.var(cx_Oracle.NUMBER)
+            args=[num_det1]
+            row=cur.callproc("Get_num_OrderDetail", args)
+            #num_det = int(row[0])
+            num_det=num_det1.getvalue()
+            id_g = int(input("Введите код товара \n"))
+            quan = int(input("Введите общее количество товара \n"))
+            un = input("Укажите единицу счёта товара \n")
+            #cur.execute("exec InsertOrderDetail @id_ordet1 = ?,@id_ord1 = ?,@id_g1 = ?,@quan1 = ?,@un1 = ?", num_det, id_ord, id_g, quan, un)
+            args=[num_det, id_ord, id_g, quan, un]
+            cur.callproc("InsertOrderDetail", args)
             cur.commit()
-            count_good = int(input("Введите число типов товара \n"))
-            i = 0
-            while i < count_good:
+            i = i + 1
 
-                #row = cur.execute("exec Get_num_OrderDetail").fetchone()
-                num_det1=cur.var(cx_Oracle.NUMBER)
-                args=[num_det1]
-                row=cur.callproc("Get_num_OrderDetail", args)
-                #num_det = int(row[0])
-                num_det=num_det1.getvalue()
-                id_g = int(input("Введите код товара \n"))
-                quan = int(input("Введите общее количество товара \n"))
-                un = input("Укажите единицу счёта товара \n")
-                #cur.execute("exec InsertOrderDetail @id_ordet1 = ?,@id_ord1 = ?,@id_g1 = ?,@quan1 = ?,@un1 = ?", num_det, id_ord, id_g, quan, un)
-                args=[num_det, id_ord, id_g, quan, un]
-                cur.callproc("InsertOrderDetail", args)
-                cur.commit()
-                i = i + 1
-
-            cur.close()
-            con.close()
+        cur.close()
+        con.close()
             
     else:
-           print("У вас нет прав доступа!")
+        print("У вас нет прав доступа!")
 
 
-def  Insert_Supply(cat1):
+def Insert_Supply(cat1):
 
     id_prov=int(input("Введите код поставщика \n"))
     c=input("Введите стоимость поставки \n")
@@ -202,97 +202,97 @@ def  Insert_Supply(cat1):
     
     if cat1 == '1':
 
-            con = cx_Oracle.connect('SYSTEM/Sys17917@localhost/orcl')
-            cur = con.cursor()
-            #row = cur.execute("exec Get_num_Supply").fetchone()
-            id_sup1=cur.var(cx_Oracle.NUMBER)
-            args=[id_sup1]
-            row=cur.callproc("Get_num_Supply_1", args)
-            #id_sup = int(row[0])
-            id_sup=id_sup1.getvalue()
-            #cur.execute("exec InsertSupply @id_sup1 = ?,@id_prov1 = ?,@c1 = ?,@c_sup1 = ?,@date_of_arr1 = ?", id_sup, id_prov, c, c_sup, data_of_arr)
-            args=[id_sup, id_prov, c, c_sup, data_of_arr]
-            cur.callproc("InsertSupply", args)
+        con = cx_Oracle.connect('SYSTEM/Sys17917@localhost/orcl')
+        cur = con.cursor()
+        #row = cur.execute("exec Get_num_Supply").fetchone()
+        id_sup1=cur.var(cx_Oracle.NUMBER)
+        args=[id_sup1]
+        row=cur.callproc("Get_num_Supply_1", args)
+        #id_sup = int(row[0])
+        id_sup=id_sup1.getvalue()
+        #cur.execute("exec InsertSupply @id_sup1 = ?,@id_prov1 = ?,@c1 = ?,@c_sup1 = ?,@date_of_arr1 = ?", id_sup, id_prov, c, c_sup, data_of_arr)
+        args=[id_sup, id_prov, c, c_sup, data_of_arr]
+        cur.callproc("InsertSupply", args)
+        cur.commit()
+        count_good = int(input("Введите число типов товара \n"))
+        i = 0
+        while i < count_good:
+
+            #row = cur.execute("exec Get_num_SupplyDetail").fetchone()
+            num_det1=cur.var(cx_Oracle.NUMBER)
+            args=[num_det1]
+            row=cur.callproc("Get_num_SupplyDetail_1", args)
+            #num_det = int(row[0])
+            num_det=num_det1.getvalue()
+            id_g = int(input("Введите код товара \n"))
+            quan = int(input("Введите общее количество товара \n"))
+            un = input("Укажите единицу счёта товара \n")
+            quan_kpt = int(input("Введите количество оставшегося товара \n"))
+            #cur.execute("exec InsertSupplyDetail @id_sudet1 = ?,@id_sup1 = ?,@id_g = ?,@quan1 = ?,@un1 = ?,@quan_kpt = ?", num_det, id_sup, id_g, quan, un, quan_kpt)
+            args=[num_det, id_sup, id_g, quan, un, quan_kpt]
+            cur.callproc("InsertSupplyDetail", args)
             cur.commit()
-            count_good = int(input("Введите число типов товара \n"))
-            i = 0
-            while i < count_good:
-
-                #row = cur.execute("exec Get_num_SupplyDetail").fetchone()
-                num_det1=cur.var(cx_Oracle.NUMBER)
-                args=[num_det1]
-                row=cur.callproc("Get_num_SupplyDetail_1", args)
-                #num_det = int(row[0])
-                num_det=num_det1.getvalue()
-                id_g = int(input("Введите код товара \n"))
-                quan = int(input("Введите общее количество товара \n"))
-                un = input("Укажите единицу счёта товара \n")
-                quan_kpt = int(input("Введите количество оставшегося товара \n"))
-                #cur.execute("exec InsertSupplyDetail @id_sudet1 = ?,@id_sup1 = ?,@id_g = ?,@quan1 = ?,@un1 = ?,@quan_kpt = ?", num_det, id_sup, id_g, quan, un, quan_kpt)
-                args=[num_det, id_sup, id_g, quan, un, quan_kpt]
-                cur.callproc("InsertSupplyDetail", args)
-                cur.commit()
-                i = i + 1
+            i = i + 1
                 
-            cur.close()
-            con.close()
+        cur.close()
+        con.close()
     else:
-           print("У вас нет прав доступа!")
+        print("У вас нет прав доступа!")
 
 
-def  Insert_Person(cat2):
+def Insert_Person(cat2):
 
-     name=input("Введите имя/название нового партнёра \n")
-     type1=input("Введите тип юридического лица \n")
+    name=input("Введите имя/название нового партнёра \n")
+    type1=input("Введите тип юридического лица \n")
      
-     if cat2 == '1':
+    if cat2 == '1':
 
-             con = cx_Oracle.connect('SYSTEM/Sys17917@localhost/orcl')
-             cur = con.cursor()
-             #row = cur.execute("exec Get_num_Firm").fetchone()
-             id_p1=cur.var(cx_Oracle.NUMBER)
-             args=[id_p1]
-             row=cur.callproc("Get_num_Firm_1", args)
-             #id_p = int(row[0])
-             id_p=id_p1.getvalue()
-             #cur.execute("exec InsertFirm @id_fir1 = ?,@app1 = ?,@id_t1 = ?", id_p, name, type1)
-             args=[id_p, name, type1]
-             cur.callproc("InsertFirm", args)
-             cur.commit()
-             cur.close()
-             con.close()
-     else:
-           print("У вас нет прав доступа!")
+        con = cx_Oracle.connect('SYSTEM/Sys17917@localhost/orcl')
+        cur = con.cursor()
+        #row = cur.execute("exec Get_num_Firm").fetchone()
+        id_p1=cur.var(cx_Oracle.NUMBER)
+        args=[id_p1]
+        row=cur.callproc("Get_num_Firm_1", args)
+        #id_p = int(row[0])
+        id_p=id_p1.getvalue()
+        #cur.execute("exec InsertFirm @id_fir1 = ?,@app1 = ?,@id_t1 = ?", id_p, name, type1)
+        args=[id_p, name, type1]
+        cur.callproc("InsertFirm", args)
+        cur.commit()
+        cur.close()
+        con.close()
+    else:
+        print("У вас нет прав доступа!")
 
-def  Insert_Contact(cat5):
+def Insert_Contact(cat5):
 
-     tit=input("Введите наименование нового контакта")
-     name=input("Введите имя контактного лица \n")
-     id_fir=input("Введите идентификатор организации \n")
-     adres=input("Введите адрес \n")
-     tel=input("Введите телефон обратной связи \n")
-     e_mail=input("Введите адрес электронной почты \n")
+    tit=input("Введите наименование нового контакта")
+    name=input("Введите имя контактного лица \n")
+    id_fir=input("Введите идентификатор организации \n")
+    adres=input("Введите адрес \n")
+    tel=input("Введите телефон обратной связи \n")
+    e_mail=input("Введите адрес электронной почты \n")
      
-     if cat5 == '1':
+    if cat5 == '1':
 
-             con = cx_Oracle.connect('SYSTEM/Sys17917@localhost/orcl')
-             cur = con.cursor()
-             #row = cur.execute("exec Get_num_Person").fetchone()
-             id_p1=cur.var(cx_Oracle.NUMBER)
-             args=[id_p1]
-             row=cur.callproc("Get_num_Person_1", args)
-             #id_p = int(row[0])
-             id_p=id_p1.getvalue()
-             #cur.execute("exec InsertPerson @id_per1 = ?,@tit1 = ?,@fio1 = ?,@id_fir1 = ?,@adr1 = ?,@tel1 = ?,@e_m1 = ?", id_p, tit, name, id_fir, adres, tel, e_mail)
-             args=[id_p, tit, name, id_fir, adres, tel, e_mail]
-             cur.callproc("InsertPerson", args)
-             cur.commit()
-             cur.close()
-             con.close()
-     else:
-           print("У вас нет прав доступа!")
+        con = cx_Oracle.connect('SYSTEM/Sys17917@localhost/orcl')
+        cur = con.cursor()
+        #row = cur.execute("exec Get_num_Person").fetchone()
+        id_p1=cur.var(cx_Oracle.NUMBER)
+        args=[id_p1]
+        row=cur.callproc("Get_num_Person_1", args)
+        #id_p = int(row[0])
+        id_p=id_p1.getvalue()
+        #cur.execute("exec InsertPerson @id_per1 = ?,@tit1 = ?,@fio1 = ?,@id_fir1 = ?,@adr1 = ?,@tel1 = ?,@e_m1 = ?", id_p, tit, name, id_fir, adres, tel, e_mail)
+        args=[id_p, tit, name, id_fir, adres, tel, e_mail]
+        cur.callproc("InsertPerson", args)
+        cur.commit()
+        cur.close()
+        con.close()
+    else:
+        print("У вас нет прав доступа!")
 
-def  Insert_Good(cat3):
+def Insert_Good(cat3):
 
     name = input("Введите название нового товара \n")
     quan = int(input("Введите количество товара \n"))
@@ -300,35 +300,35 @@ def  Insert_Good(cat3):
     
     if cat3 == '1':
 
-            con = cx_Oracle.connect('SYSTEM/Sys17917@localhost/orcl')
-            cur = con.cursor()
-            #row = cur.execute("exec Get_num_Good").fetchone()
-            id_g1=cur.var(cx_Oracle.NUMBER)
-            args=[id_g1]
-            row=cur.callproc("Get_num_Good_1", args)
-            #id_g = int(row[0])
-            id_g=id_g1.getvalue()
-            #row = cur.execute("exec Get_num_TypeGood").fetchone()
-            num_det1=cur.var(cx_Oracle.NUMBER)
-            args=[num_det1]
-            row=cur.callproc("Get_num_TypeGood_1", args)
-            #num_det = int(row[0])
-            num_det=num_det1.getvalue()
-            #cur.execute("exec InsertGood @id_g1 = ?,@ap1 = ?,@quan1 = ?", id_g, name, quan)
-            args=[id_g, name, quan]
-            cur.callproc("InsertGood", args)
-            cur.commit()
-            #cur.execute("exec InsertTypeGood @id_t1 = ?,@id_g1 = ?,@t1 = ?", num_det, id_g, type1)
-            args=[num_det, id_g, type1]
-            cur.callproc("InsertTypeGood", args)
-            cur.commit()
-            cur.close()
-            con.close()
+        con = cx_Oracle.connect('SYSTEM/Sys17917@localhost/orcl')
+        cur = con.cursor()
+        #row = cur.execute("exec Get_num_Good").fetchone()
+        id_g1=cur.var(cx_Oracle.NUMBER)
+        args=[id_g1]
+        row=cur.callproc("Get_num_Good_1", args)
+        #id_g = int(row[0])
+        id_g=id_g1.getvalue()
+        #row = cur.execute("exec Get_num_TypeGood").fetchone()
+        num_det1=cur.var(cx_Oracle.NUMBER)
+        args=[num_det1]
+        row=cur.callproc("Get_num_TypeGood_1", args)
+        #num_det = int(row[0])
+        num_det=num_det1.getvalue()
+        #cur.execute("exec InsertGood @id_g1 = ?,@ap1 = ?,@quan1 = ?", id_g, name, quan)
+        args=[id_g, name, quan]
+        cur.callproc("InsertGood", args)
+        cur.commit()
+        #cur.execute("exec InsertTypeGood @id_t1 = ?,@id_g1 = ?,@t1 = ?", num_det, id_g, type1)
+        args=[num_det, id_g, type1]
+        cur.callproc("InsertTypeGood", args)
+        cur.commit()
+        cur.close()
+        con.close()
             
     else:
-           print("У вас нет прав доступа!")
+        print("У вас нет прав доступа!")
 
-def  View_dataBase():
+def View_dataBase():
 
     key = 7
     while key != 6:
@@ -432,7 +432,7 @@ def  View_dataBase():
             cur.close()
             con.close()
 
-def  SpecialFunctions(cat1, cat2, cat3):
+def SpecialFunctions(cat1, cat2, cat3):
 
     key = 7
     while key != 6:
@@ -531,5 +531,7 @@ def Delete_Good(cat3):
            con.close()
     else:
         print("У вас нет прав доступа!")
+
+
 
 main()
